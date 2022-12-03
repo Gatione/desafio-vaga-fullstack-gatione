@@ -26,7 +26,7 @@ export const deleteContactService = async (
   }
 
   const contact = await contactRepository.findOne({
-    where: { id, user: { id: user.id } },
+    where: { id },
   });
 
   if (!contact) {

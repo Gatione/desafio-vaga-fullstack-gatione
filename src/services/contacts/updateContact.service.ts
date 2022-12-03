@@ -31,6 +31,21 @@ export const updateContactService = async (
     throw new AppError("Unauthorized");
   }
 
+  if (name !== contact.name) {
+    const nameAlreadyExists = await contactRepository.findOne({
+      where: {
+        name,
+        user: {
+          id: contact.user.id,
+        },
+      },
+    });
+
+    if (nameAlreadyExists) {
+      throw new AppError("There is another contact with this name");
+    }
+  }
+
   await contactRepository.update(contact.id, { name });
 
   const updatedContact = await contactRepository.findOneBy({ id });

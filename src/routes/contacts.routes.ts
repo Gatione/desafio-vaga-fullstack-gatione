@@ -11,7 +11,7 @@ const contactRoutes = Router();
 contactRoutes.post("", ensureAuthMiddleware, createContactController);
 contactRoutes.get("", ensureAuthMiddleware, listContactsController);
 contactRoutes.get("/:id", ensureAuthMiddleware, getContactController);
-contactRoutes.patch("/:id", ensureAuthMiddleware, updateContactController)
+contactRoutes.patch("/:id", ensureAuthMiddleware, updateContactController);
 contactRoutes.delete("/:id", ensureAuthMiddleware, deleteContactController);
 
 export default contactRoutes;
