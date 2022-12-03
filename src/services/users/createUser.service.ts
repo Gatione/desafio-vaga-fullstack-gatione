@@ -35,13 +35,19 @@ export const createUserService = async ({
 
   await userRepository.save(user);
 
-  emails.map(async (email) => {
-    await emailRepository.save({ email, user });
-  });
+  await Promise.all(
+    emails.map(async (email) => {
+      await emailRepository.save({ email, user });
+    })
+  );
 
-  phones.map(async (phone) => {
-    await phoneRepository.save({ phone, user });
-  });
+  await Promise.all(
+    phones.map(async (phone) => {
+      await phoneRepository.save({ phone, user });
+    })
+  );
 
-  return user;
+  const newUser = await userRepository.findOneBy({id: user.id})
+
+  return newUser!;
 };

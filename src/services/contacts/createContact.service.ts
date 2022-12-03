@@ -1,3 +1,4 @@
+import { Repository } from "typeorm";
 import AppDataSource from "../../data-source";
 import { Contact } from "../../entities/contact.entity";
 import { Email } from "../../entities/email.entity";
@@ -38,17 +39,17 @@ export const createContactService = async ({
   });
   await contactRepository.save(contact);
 
-  emails.forEach(async email => {
-    await emailRepository.save({ email, contact });
-  });
+  await Promise.all(
+    emails.map(async (email) => {
+      await emailRepository.save({ email, contact });
+    })
+  );
 
-  // emails.map(async (email) => {
-  //   await emailRepository.save({ email, contact });
-  // });
-
-  phones.map(async (phone) => {
-    await phoneRepository.save({ phone, contact });
-  });
+  await Promise.all(
+    phones.map(async (phone) => {
+      await phoneRepository.save({ phone, contact });
+    })
+  );
 
   const newContact = await contactRepository.findOne({
     where: { id: contact.id },
