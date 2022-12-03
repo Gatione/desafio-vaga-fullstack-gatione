@@ -1,15 +1,15 @@
 import AppDataSource from "../../data-source";
 import { Contact } from "../../entities/contact.entity";
-import { Email } from "../../entities/email.entity";
+import { Phone } from "../../entities/phone.entity";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors/AppError";
 
-export const createEmailService = async (
-  email: string,
+export const createPhoneService = async (
+  phone: string,
   userId: string,
   contactId: string
 ) => {
-  const emailRepository = AppDataSource.getRepository(Email);
+  const phoneRepository = AppDataSource.getRepository(Phone);
   const userRepository = AppDataSource.getRepository(User);
   const contactRepository = AppDataSource.getRepository(Contact);
 
@@ -28,24 +28,24 @@ export const createEmailService = async (
       throw new AppError("Contact not found", 404);
     }
 
-    const newEmail = emailRepository.create({
-      email,
+    const newPhone = phoneRepository.create({
+      phone,
       contact,
     });
-    await emailRepository.save(newEmail);
+    await phoneRepository.save(newPhone);
 
-    const emailResponse = await emailRepository.findOneBy({ id: newEmail.id });
+    const phoneResponse = await phoneRepository.findOneBy({ id: newPhone.id });
 
-    return emailResponse;
+    return phoneResponse;
   }
 
-  const newEmail = emailRepository.create({
-    email,
+  const newPhone = phoneRepository.create({
+    phone,
     user,
   });
-  await emailRepository.save(newEmail);
+  await phoneRepository.save(newPhone);
 
-  const emailResponse = await emailRepository.findOneBy({ id: newEmail.id });
+  const phoneResponse = await phoneRepository.findOneBy({ id: newPhone.id });
 
-  return emailResponse;
+  return phoneResponse;
 };
