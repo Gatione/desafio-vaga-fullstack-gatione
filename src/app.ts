@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use("/users", userRoutes);
-app.use("/login", sessionRoutes);
+app.use("/", sessionRoutes);
 app.use("/contacts", contactRoutes);
 app.use("/emails", emailsRoutes);
 app.use("/phones", phonesRoutes);
